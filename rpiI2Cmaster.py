@@ -7,8 +7,13 @@ bus = smbus.SMBus(1)
 address = 0x20
 
 ##bus.write_byte_data(address,io,value)
-def read(io, aOrD):
-    bus.write_byte_data(address,io,aOrD) ##tells arduino code that we're reading from io
+def digitalRead(io):
+    bus.write_byte(address,io) ##tells arduino code that we're reading from io
+    time.sleep(0.1) ##wait to give time for the arduino to analogread io
+    return bus.read_byte(address) ## now listen for the value to be sent
+
+def analogRead(io)
+    bus.write_byte(address,io + 128) ##tells arduino code that we're reading from io
     time.sleep(0.1) ##wait to give time for the arduino to analogread io
     return bus.read_byte(address) ## now listen for the value to be sent
 
@@ -20,9 +25,9 @@ while True:
         if not io:
             continue
         if(aOrD == 1):
-            read(io + 128)
+            print(analogRead(io))
         else:
-            read(io)
+            print(digitalRead(io))
     elif(mode == "w"):
         v = int(input("Enter a value: "))
         if not io:
