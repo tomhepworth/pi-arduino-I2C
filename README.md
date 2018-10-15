@@ -1,5 +1,9 @@
 # pi-arduino-I2C
-Simple pin control over I2C using the python smbus2 library for Raspberry Pi and the Wire library for Arduino.
+Simple pin control over I2C using the python smbus2 library for Raspberry Pi and the Wire library for Arduino. 
+
+Contains the following wrapper functions to be used on the Pi master as they would on an Arduino:
+digitalRead(pin) 
+analogRead(pin)
 
 Notes:
 
