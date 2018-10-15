@@ -19,6 +19,17 @@ def analogRead(io):
 	lsb = bus.read_byte(address)		## get bottom half of value
 	return (msb * (2**8)) + lsb			## reassemble the value & return
 
+def digitalWrite(io, v):				##just a wrapper funciton as only one byte needs to be sent, this can be handled by the smbus library just fine
+	bus.write_byte_data(address,io,v)
+
+def analogWrite(io, v):
+	##analogWrite is only ever used for PWM outout which is a value between 0 and 255. This means we can send the value in only one byte.
+	if(v > 255): ##small error handling
+		print("PWM output only goes up to 255")
+	else:
+		bus.write_byte_data(address,(io+128),v)	## set bit 8 to signal an analogWrite
+
+
 
 while True:
 	io = int(input("Enter io (2 - 21): "))
@@ -31,24 +42,22 @@ while True:
 		AorD = input("Analog or Digital? a/d: ")
 		if(AorD == "a"):
 			print(analogRead(io))
-
 		elif(AorD == "d"):
 			print(digitalRead(io))
-
 		else:
 			print("ERROR: invalid read type")
 
 	elif(mode == "w"):
-		ADorS = input("Analog, Digital? a/d:")
+		AorD = input("Analog, Digital? a/d:")
 		v = int(input("Enter a value: "))
 		if not v:
 			continue
 
 		if(AorD == "a"):
-			bus.write_byte_data(address,(io+128),v)	## set bit 8 to signal an analogWrite
+			analogWrite(io,v)
 
-		elif(ADorS == "d"):
-			bus.write_byte_data(address,io,v)		## plain old digitalWrite
+		elif(AorD == "d"):
+			digitalWrite(io,v)	## plain old digitalWrite
 
 		else:
 			print("ERROR: invalid write type")
