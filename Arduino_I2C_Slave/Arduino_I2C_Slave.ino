@@ -77,4 +77,5 @@ void sendData(){
     t = value & 255; // LSB
     readCount = 0;
   }
+  Wire.write(t);
 }

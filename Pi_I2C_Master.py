@@ -50,8 +50,6 @@ while True:
 	elif(mode == "w"):
 		AorD = input("Analog, Digital? a/d:")
 		v = int(input("Enter a value: "))
-		if not v:
-			continue
 
 		if(AorD == "a"):
 			analogWrite(io,v)
