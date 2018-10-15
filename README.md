@@ -3,9 +3,7 @@ Simple pin control over I2C using the python smbus2 library for Raspberry Pi and
 
 Contains the following wrapper functions to be used on the Pi master as they would on an Arduino:
 digitalRead(pin) 
-digitalWrite(pin) 
 analogRead(pin)
-analogWrite(pin)
 
 Notes:
 
