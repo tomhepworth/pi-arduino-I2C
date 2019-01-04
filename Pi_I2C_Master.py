@@ -17,7 +17,7 @@ def analogRead(io):
 	time.sleep(0.1) 					## wait for time for the ADC to run
 	msb = bus.read_byte(address)		## get first half of value
 	lsb = bus.read_byte(address)		## get bottom half of value
-	return (msb * (2**8)) + lsb			## reassemble the value & return
+	return (msb * (2**7)) + lsb			## reassemble the value & return
 
 def digitalWrite(io, v):				##just a wrapper funciton as only one byte needs to be sent, this can be handled by the smbus library just fine
 	bus.write_byte_data(address,io,v)

@@ -55,7 +55,7 @@ void receiveData(int byteCount){
     if (io > 128) { // If the io pin value has the bit 8 set, then it's an analogRead request - you can digitalRead an analog pin except for A6 & A7 (20 & 21) which are analog only
       value = analogRead(io - 128);
       readCount = 0; // Override any current read count as the value has now changed - if the master hasn't read the two values, tough.
-
+      
     } else {
       value = digitalRead(io);
       readCount = 1; // This will jump straight to returning the LSB as we are only going to be returning a 0 or a 1 - rather up to the other end to ask for just one byte.
@@ -71,10 +71,10 @@ void sendData(){
   // As I2C only does 7 bit data, we have to chop up a value, return two parts and reassemble at the other end. The 'other end' has to perform two reads as the 'other end' is a Pi running Python and SMBus library has no simple way of receiving a word from a slave without using a register, which isn't supported in the Arduino Wire library.
   int t = 0;
   if (readCount == 0) {
-    t = value >> 8; // MSB
+    t = value >> 7; // MSB
     readCount = 1; // Set flag to send second half on next call
   } else {
-    t = value & 255; // LSB
+    t = value & 128; // LSB
     readCount = 0;
   }
   Wire.write(t);
